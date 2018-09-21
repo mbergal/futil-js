@@ -3,6 +3,7 @@
   "version": "1.50.0",
   "description": "F(unctional) util(ities). Resistance is futile.",
   "main": "lib/futil-js.js",
+  "types": "types",
   "scripts": {
     "build": "webpack",
     "danger": "duti",
@@ -18,12 +19,14 @@
     "lint-fix": "eslint dangerfile.js src/*.js test/*.js --fix",
     "fmt": "prettier --write *.js; prettier --write '{src,test}/**/*.js'",
     "duti:fix": "npm run fmt && npm run lint-fix && npm run fmt",
+    "typings": "dtslint types",
     "prepublish": "webpack"
   },
   "author": "Samuel Greene <sgreene@smartprocure.us>",
   "license": "MIT",
   "dependencies": {
     "babel-polyfill": "^6.23.0",
+    "dtslint": "^0.3.0",
     "lodash": "^4.17.4"
   },
   "babel": {
