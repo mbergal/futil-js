@@ -15,6 +15,7 @@ import {
   dotEncoder,
   slashEncoder,
   chunkBy,
+  lensProp,
 } from "futil-js";
 
 // $ExpectType string
@@ -81,3 +82,19 @@ chunkBy(([a], b) => b % a === 0, [2, 2, 2, 3, 2, 2]);
 
 // $ExpectType number[][]
 chunkBy(([x]: number[], y) => (x * y) % 3 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+interface A {
+  a: number;
+  b: string;
+}
+
+const a: A = {
+  a: 1,
+  b: "",
+};
+
+// $ExpectType Lens<A, number>
+lensProp("a", a);
+
+// $ExpectType Lens<A, string>
+lensProp("b", a);

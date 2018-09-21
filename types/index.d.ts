@@ -60,3 +60,13 @@ export function chunkBy<T>(f: (a: T[], b: T) => boolean, a: ArrayLike<T>): T[][]
 export function chunkBy<T>(
   f: (a: T[], b: T) => boolean
 ): (a: ArrayLike<T>) => T[][];
+
+export interface Lens<T, V> {
+  get(): V;
+  set(v: V): void;
+}
+
+export function lensProp<T, K extends keyof T>(
+  field: K,
+  source: T
+): Lens<T, T[K]>;
