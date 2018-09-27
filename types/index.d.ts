@@ -1,5 +1,7 @@
 // TypeScript Version: 2.2
 
+import { LodashMap1x1 } from "lodash/fp";
+
 export function compactJoin(join: string, x: ArrayLike<any>): string;
 export function compactJoin(join: string): (x: ArrayLike<any>) => string;
 export function compactJoin(): (join: string, x: ArrayLike<any>) => string;
@@ -108,3 +110,105 @@ export function command(
   extend?: ExtendFunction,
   timeout?: number
 ): AspectedFunction;
+
+export type Many<T> = T | ReadonlyArray<T>;
+// 0-argument first function
+export function flowMap<R1, R2>(f1: () => R1, f2: (a: R1) => R2): () => R2;
+export function flowMap<R1, R2, R3>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3
+): () => R3;
+export function flowMap<R1, R2, R3, R4>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4
+): () => R4;
+export function flowMap<R1, R2, R3, R4, R5>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5
+): () => R5;
+export function flowMap<R1, R2, R3, R4, R5, R6>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6
+): () => R6;
+export function flowMap<R1, R2, R3, R4, R5, R6, R7>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6,
+  f7: (a: R6) => R7
+): () => R7;
+export function flowMap<R1, R2, R3, R4, R5, R6, R7>(
+  f1: () => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6,
+  f7: (a: R6) => R7,
+  ...funcs: Array<Many<(a: any) => any>>
+): LodashMap1x1<R1, any>;
+export function flowMap<A1, R1, R2>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2
+): LodashMap1x1<R1, R2>;
+export function flowMap<A1, R1, R2, R3>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3
+): LodashMap1x1<R1, R3>;
+export function flowMap<A1, R1, R2, R3, R4>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4
+): LodashMap1x1<R1, R4>;
+export function flowMap<A1, R1, R2, R3, R4, R5>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5
+): LodashMap1x1<R1, R5>;
+export function flowMap<A1, R1, R2, R3, R4, R5, R6>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6
+): LodashMap1x1<R1, R6>;
+export function flowMap<A1, R1, R2, R3, R4, R5, R6, R7>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6,
+  f7: (a: R6) => R7
+): LodashMap1x1<R1, R7>;
+export function flowMap<A1, R1, R2, R3, R4, R5, R6, R7>(
+  f1: (a1: A1) => R1,
+  f2: (a: R1) => R2,
+  f3: (a: R2) => R3,
+  f4: (a: R3) => R4,
+  f5: (a: R4) => R5,
+  f6: (a: R5) => R6,
+  f7: (a: R6) => R7,
+  ...funcs: Array<Many<(a: any) => any>>
+): LodashMap1x1<R1, R7>;
+
+export function findApply(f, arr) {
+  // = _.curry((f, arr) => f(_.find(f, arr)))
+}

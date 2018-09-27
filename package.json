@@ -25,6 +25,7 @@
   "author": "Samuel Greene <sgreene@smartprocure.us>",
   "license": "MIT",
   "dependencies": {
+    "@types/lodash": "^4.14.116",
     "babel-polyfill": "^6.23.0",
     "dtslint": "^0.3.0",
     "lodash": "^4.17.4"

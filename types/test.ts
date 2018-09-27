@@ -24,6 +24,7 @@ import {
   deprecate,
   concurrency,
   command,
+  flowMap,
 } from "futil-js";
 
 // $ExpectType string
@@ -138,3 +139,32 @@ command()(() => 6);
 command(undefined, 100)(() => 6);
 // $ExpectType number
 command(undefined)(() => 6);
+
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1)(1);
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1)(1);
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1)(1);
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1, x => x + 1)(1);
+// $ExpectType number
+flowMap(
+  (x: number) => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1
+)([1]);
+// $ExpectType any
+flowMap(
+  (x: number) => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1,
+  x => x + 1
+)([1]);
