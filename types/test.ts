@@ -1,4 +1,4 @@
-// TypeScript Version: 3.0
+// TypeScript Version: 2.2
 
 import {
   compactJoin,
@@ -15,7 +15,15 @@ import {
   dotEncoder,
   slashEncoder,
   chunkBy,
-  lensProp,
+  aspect,
+  aspectSync,
+  logs,
+  error,
+  errors,
+  status,
+  deprecate,
+  concurrency,
+  command,
 } from "futil-js";
 
 // $ExpectType string
@@ -83,18 +91,50 @@ chunkBy(([a], b) => b % a === 0, [2, 2, 2, 3, 2, 2]);
 // $ExpectType number[][]
 chunkBy(([x]: number[], y) => (x * y) % 3 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-interface A {
-  a: number;
-  b: string;
-}
+// $ExpectType Promise<number>
+aspect({
+  init: state => {},
+  after: state => {},
+  before: state => {},
+  always: state => {},
+  onError: state => {},
+})(() => 6);
 
-const a: A = {
-  a: 1,
-  b: "",
-};
+// $ExpectType number
+aspectSync({
+  init: state => {},
+  after: state => {},
+  before: state => {},
+  always: state => {},
+  onError: state => {},
+})(() => 6);
 
-// $ExpectType Lens<A, number>
-lensProp("a", a);
+// $ExpectType number
+logs()(() => 6);
 
-// $ExpectType Lens<A, string>
-lensProp("b", a);
+logs().state.logs;
+
+// $ExpectType number
+error()(() => 6);
+error().state.error;
+
+// $ExpectType number
+errors()(() => 6);
+errors().state.errors;
+
+// $ExpectType number
+status()(() => 6);
+status().state.logs;
+
+// $ExpectType number
+deprecate("subject", "version", "alternative")(() => 6);
+
+// $ExpectType number
+concurrency()(() => 6);
+
+// $ExpectType number
+command()(() => 6);
+// $ExpectType number
+command(undefined, 100)(() => 6);
+// $ExpectType number
+command(undefined)(() => 6);

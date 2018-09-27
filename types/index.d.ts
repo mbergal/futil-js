@@ -1,4 +1,4 @@
-// TypeScript Version: 2.1
+// TypeScript Version: 2.2
 
 export function compactJoin(join: string, x: ArrayLike<any>): string;
 export function compactJoin(join: string): (x: ArrayLike<any>) => string;
@@ -61,12 +61,50 @@ export function chunkBy<T>(
   f: (a: T[], b: T) => boolean
 ): (a: ArrayLike<T>) => T[][];
 
-export interface Lens<T, V> {
-  get(): V;
-  set(v: V): void;
+export function aspect(params: {
+  name?: "aspect"
+  init?: (state: {}) => void
+  after?: (result: any, args: any[], state: {}) => any
+  before?: (args: any[], state: {}) => any
+  always?: (state: {}, args: any[]) => any
+  onError?: (state: {}) => any
+}): {
+  state: {}
+  <R>(f: (...args: any[]) => R | Promise<R>): Promise<R>
+};
+
+export function aspectSync(params: {
+  name?: "aspect"
+  init?: (state: {}) => void
+  after?: (result: any, args: any[], state: {}) => any
+  before?: (args: any[], state: {}) => any
+  always?: (state: {}, args: any[]) => any
+  onError?: (state: {}) => any
+}): {
+  state: {}
+  <R>(f: (...args: any[]) => R): R
+};
+
+export interface AspectedFunction {
+  state: { [key: string]: any };
+  <R>(f: (...args: any[]) => R): R;
 }
 
-export function lensProp<T, K extends keyof T>(
-  field: K,
-  source: T
-): Lens<T, T[K]>;
+export type ExtendFunction = (a: any) => (b: any) => any;
+export function logs(extend?: ExtendFunction): AspectedFunction;
+export function error(extend?: ExtendFunction): AspectedFunction;
+export function errors(extend?: ExtendFunction): AspectedFunction;
+export function status(extend?: ExtendFunction): AspectedFunction;
+
+export function deprecate(
+  subject: string,
+  version: string,
+  alternative: string
+): AspectedFunction;
+
+export function clearStatus(timeout?: number): AspectedFunction;
+export function concurrency(): AspectedFunction;
+export function command(
+  extend?: ExtendFunction,
+  timeout?: number
+): AspectedFunction;
