@@ -25,72 +25,74 @@ import {
   concurrency,
   command,
   flowMap,
-} from "futil-js";
+  findApply,
+  map,
+} from 'futil-js'
 
 // $ExpectType string
-compactJoin(",", [1, undefined, 2, null, 3]);
+compactJoin(',', [1, undefined, 2, null, 3])
 // $ExpectType string
-compactJoin(",")([1, undefined, 2, null, 3]);
+compactJoin(',')([1, undefined, 2, null, 3])
 // $ExpectType string
-compactJoin(" and ", [null, "Alice", "Bob", false]);
+compactJoin(' and ', [null, 'Alice', 'Bob', false])
 
 // $ExpectType string
-dotJoin([1, undefined, 2, null, 3]);
+dotJoin([1, undefined, 2, null, 3])
 
-const fn = pushIn([1, 2, 3]);
+const fn = pushIn([1, 2, 3])
 // $ExpectType ArrayLike<number>
-fn(4);
+fn(4)
 
 // $ExpectType string
-insertAtIndex(1, "1", "A");
+insertAtIndex(1, '1', 'A')
 
-repeated([1, 2, 3]);
+repeated([1, 2, 3])
 // $ExpectType string[]
-repeated(["a", "b", "c"]);
+repeated(['a', 'b', 'c'])
 
 // $ExpectType [number, number][]
-mergeRanges([[0, 2], [1, 4]]);
+mergeRanges([[0, 2], [1, 4]])
 
-const cycle1 = cycle([1, 2, 3]);
+const cycle1 = cycle([1, 2, 3])
 // $ExpectType number
-cycle1(1);
+cycle1(1)
 
-const cycle2 = cycle([true, false]);
+const cycle2 = cycle([true, false])
 // $ExpectType boolean
-cycle2(true);
+cycle2(true)
 
 // $ExpectType { [id: string]: number; }
-zipObjectDeepWith(["a", "b"], () => 1);
+zipObjectDeepWith(['a', 'b'], () => 1)
 
 // $ExpectType { [id: string]: number; }
-zipObjectDeepWith(["a", "b"], n => n + 1);
+zipObjectDeepWith(['a', 'b'], n => n + 1)
 
 // $ExpectType { [k: string]: string; }
-arrayToObject(x => `key${x}`, x => `vala`, ["a", "b", "c"]);
+arrayToObject(x => `key${x}`, x => `vala`, ['a', 'b', 'c'])
 
 // $ExpectType { [k: string]: string; }
-arrayToObject(x => `key${x}`)(x => `val${x}`)(["a", "b", "c"]);
+arrayToObject(x => `key${x}`)(x => `val${x}`)(['a', 'b', 'c'])
 
 // $ExpectType string[][]
-prefixes(["root", "criteria", "someNode"]);
+prefixes(['root', 'criteria', 'someNode'])
 
 // $ExpectType number[][]
-prefixes([1, 2, 3]);
+prefixes([1, 2, 3])
 
 // $ExpectType string
-encoder("->").encode(["a", "b"]);
+encoder('->').encode(['a', 'b'])
 
 // $ExpectType string
-dotEncoder.encode(["a", "b"]);
+dotEncoder.encode(['a', 'b'])
 
 // $ExpectType string
-slashEncoder.encode(["a", "b"]);
+slashEncoder.encode(['a', 'b'])
 
 // $ExpectType number[][]
-chunkBy(([a], b) => b % a === 0, [2, 2, 2, 3, 2, 2]);
+chunkBy(([a], b) => b % a === 0, [2, 2, 2, 3, 2, 2])
 
 // $ExpectType number[][]
-chunkBy(([x]: number[], y) => (x * y) % 3 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+chunkBy(([x]: number[], y) => (x * y) % 3 === 0)([1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 // $ExpectType Promise<number>
 aspect({
@@ -99,7 +101,7 @@ aspect({
   before: state => {},
   always: state => {},
   onError: state => {},
-})(() => 6);
+})(() => 6)
 
 // $ExpectType number
 aspectSync({
@@ -108,46 +110,46 @@ aspectSync({
   before: state => {},
   always: state => {},
   onError: state => {},
-})(() => 6);
+})(() => 6)
 
 // $ExpectType number
-logs()(() => 6);
+logs()(() => 6)
 
-logs().state.logs;
-
-// $ExpectType number
-error()(() => 6);
-error().state.error;
+logs().state.logs
 
 // $ExpectType number
-errors()(() => 6);
-errors().state.errors;
+error()(() => 6)
+error().state.error
 
 // $ExpectType number
-status()(() => 6);
-status().state.logs;
+errors()(() => 6)
+errors().state.errors
 
 // $ExpectType number
-deprecate("subject", "version", "alternative")(() => 6);
+status()(() => 6)
+status().state.logs
 
 // $ExpectType number
-concurrency()(() => 6);
+deprecate('subject', 'version', 'alternative')(() => 6)
 
 // $ExpectType number
-command()(() => 6);
-// $ExpectType number
-command(undefined, 100)(() => 6);
-// $ExpectType number
-command(undefined)(() => 6);
+concurrency()(() => 6)
 
 // $ExpectType number
-flowMap((x: number) => x + 1, x => x + 1)(1);
+command()(() => 6)
 // $ExpectType number
-flowMap((x: number) => x + 1, x => x + 1, x => x + 1)(1);
+command(undefined, 100)(() => 6)
 // $ExpectType number
-flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1)(1);
+command(undefined)(() => 6)
+
 // $ExpectType number
-flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1, x => x + 1)(1);
+flowMap((x: number) => x + 1, x => x + 1)(1)
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1)(1)
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1)(1)
+// $ExpectType number
+flowMap((x: number) => x + 1, x => x + 1, x => x + 1, x => x + 1, x => x + 1)(1)
 // $ExpectType number
 flowMap(
   (x: number) => x + 1,
@@ -156,7 +158,7 @@ flowMap(
   x => x + 1,
   x => x + 1,
   x => x + 1
-)([1]);
+)([1])
 // $ExpectType any
 flowMap(
   (x: number) => x + 1,
@@ -167,4 +169,24 @@ flowMap(
   x => x + 1,
   x => x + 1,
   x => x + 1
-)([1]);
+)([1])
+
+let x: { [id: string]: number } = {
+  a: 1,
+}
+
+// $ExpectType number
+findApply(f => x[f], ['b', 'c', 'a'])
+
+// $ExpectType number
+findApply((f: string) => x[f])(['b', 'c', 'a'])
+
+// $ExpectType number
+map((x: number) => x + 1, [1, 2, 3])
+
+// $ExpectType number
+map((x: number) => x + 1)([1, 2, 3])
+
+// $ExpectType number
+map((x: number) => x + 1, { a: 1, b: 2, c: 3 })
+map((x: number) => x + 1)({ a: 1, b: 2, c: 3 })

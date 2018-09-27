@@ -29,4 +29,11 @@ describe('Collections Functions', () => {
     expect(f.findApply(f => x[f], ['b', 'c', 'a'])).to.equal(1)
     expect(f.findApply(f => x[f], ['b', 'c'])).to.equal(undefined)
   })
+  it('map', () => {
+    expect(f.map(x => x + 1, [1, 2, 3])).to.eql([2, 3, 4])
+    expect(f.map(x => x + 1)([1, 2, 3])).to.eql([2, 3, 4])
+
+    expect(f.map(x => x + 1, { a: 1, b: 2, c: 3 })).to.eql({ a: 2, b: 3, c: 4 })
+    expect(f.map(x => x + 1)({ a: 1, b: 2, c: 3 })).to.eql({ a: 2, b: 3, c: 4 })
+  })
 })
