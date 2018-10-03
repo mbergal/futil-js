@@ -56,3 +56,5 @@ map((x: number) => x + 1, { a: 1, b: 2, c: 3 });
 
 // $ExpectType { [id: string]: number; }
 map((x: number) => x + 1)({ a: 1, b: 2, c: 3 });
+
+// deepMap is not supported

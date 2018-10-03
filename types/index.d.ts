@@ -250,43 +250,55 @@ export function maybeCall<T1, T2, T3, T4, T5, R>(
 
 export function callOrReturn<R>(f: () => R): R | (() => R);
 
-// // (a, Monoid f) -> f[a] :: f a
-export function boundMethod<T, A extends keyof T>(method: A, object: T): any;
+export function converge<T, T1, R>(
+  converger: (t: T1) => R,
+  branches: [(t: T) => T1]
+): (t: T) => R;
 
-// // http://ramdajs.com/docs/#converge
-// export let converge = (converger, branches) => (...args) =>
-//   converger(_.over(branches)(...args))
+export function converge<T, T1, T2, R>(
+  converger: (t: T1, t2: T2) => R,
+  branches: [(t: T) => T1, (t: T) => T2]
+): (t: T) => R;
 
-// export let composeApply = (f, g) => x => f(g(x))(x)
-// export let comply = composeApply
+export function composeApply<T, T1, T2>(f: (t1: T1) => T2, g: (t: T) => T1): T2;
+export function comply<T, T1, T2>(f: (t1: T1) => T2, g: (t: T) => T1): T2;
 
-// // Prettier version of `defer` the one from bluebird docs
-// export let defer = () => {
-//   let resolve
-//   let reject
-//   let promise = new Promise((res, rej) => {
-//     resolve = res
-//     reject = rej
-//   })
-//   return {
-//     resolve,
-//     reject,
-//     promise,
-//   }
-// }
-// // `_.debounce` for async functions, which require consistently returning a single promise for all queued calls
-// export let debounceAsync = (n, f) => {
-//   let deferred = defer()
-//   let debounced = _.debounce(n, (...args) => {
-//     deferred.resolve(f(...args))
-//     deferred = defer()
-//   })
-//   return (...args) => {
-//     debounced(...args)
-//     return deferred.promise
-//   }
-// }
+export interface Deferred<T> {
+  resolve: (t: T) => Promise<T>;
+  reject: (e: any) => Promise<T>;
+  promise: Promise<T>;
+}
 
-// let currier = f => (...fns) => _.curryN(fns[0].length, f(...fns))
-// // (f1, f2, ...fn) -> f1Args1 -> f1Arg2 -> ...f1ArgN -> fn(f2(f1))
-// export let flurry = currier(_.flow)
+export function defer<T>(): Deferred<T>;
+
+export function debounceAsync<R>(
+  n: number,
+  f: () => Promise<R>
+): () => Promise<R>;
+export function debounceAsync<R, T>(
+  n: number,
+  f: (t: T) => Promise<R>
+): (t: T) => Promise<R>;
+
+export function debounceAsync<R, T, T1>(
+  n: number,
+  f: (t: T, t1: T1) => Promise<R>
+): (t: T, t1: T1) => Promise<R>;
+
+export function flurry<A, R>(f: (a: A) => R): R;
+export function flurry<A, T, R>(f: (a: A) => T, f1: (t: T) => R): R;
+export function flurry<A, T, T1, R>(
+  f: (a: A) => T,
+  f1: (t: T) => T1,
+  f2: (t: T1) => R
+): R;
+
+export function flurry<A, A1, R>(f: (a: A, a1: A1) => R): R;
+export function flurry<A, A1, T, R>(
+  f: (a: A, a1: A1) => T,
+  f1: (t: T) => R
+): (a: A, a1: A1) => R;
+export function flurry<A, A1, A2, R>(f: (a: A, a1: A1, a2: A2) => R): R;
+export function flurry<A, A1, A2, A3, R>(
+  f: (a: A, a1: A1, a2: A2, a3: A3) => R
+): R;
